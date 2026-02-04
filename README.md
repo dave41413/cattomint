@@ -1,35 +1,50 @@
-# cattomint
+# cattomint :3 
 
-A retro-styled cat video + image portal with a lightweight backend, SQLite database, and an admin panel for managing uploads.
+youtube for cats :3 
 
-## Quick start
+---
+
+## what is cattomint? :3
+
+cattomint is the alternative of youtube where u can:  
+
+- watch endless cat videos :3  
+- upload ur own cat clips >w<
+- cat
+- post about cats on forums! (coming soon)
+
+it's all about the cats owo
+
+---
+
+## features :3
+
+- tons of cat videos, from kittens to adults
+- upload ur own cat content if u want >w< 
+- like and comment on cat videos
+- give mints to cat videos... (soon) 
+
+---
+
+## quick start :3
 
 ```bash
+# make a virtual env >w<
 python -m venv .venv
+# activate it :3
 source .venv/bin/activate
+# install required packages owo
 pip install -r requirements.txt
-
-# required: set a secure admin token
-export CATTOMINT_ADMIN_TOKEN="your-secret-token"
-
-python app.py
 ```
 
-Visit:
-- `http://localhost:8000/` for the public site.
-- `http://localhost:8000/admin` for the admin panel.
+# set a secret admin token >w<
+export CATTOMINT_ADMIN_TOKEN="your-secret-token"
 
-## Admin panel notes
+# start the server :3
+python app.py
 
-- Set your admin token in the header input (saved in local storage).
-- Add video or image URLs that you host yourself.
-- Toggle the featured item with the "Make featured" button.
+---
 
-## Data storage
+## note :3
 
-Uploads are stored in `cattomint.db` (SQLite) in the project root. Delete the file to reset the catalog.
-
-## Hosting configuration
-
-- `CATTOMINT_HOST` (default `127.0.0.1`) controls the bind address.
-- `CATTOMINT_PORT` (default `8000`) controls the port.
+cattomint is for cat lovers only.... have fun!!!! =^.^=
