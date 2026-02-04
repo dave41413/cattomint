@@ -38,7 +38,10 @@ pip install -r requirements.txt
 ```
 
 # set a secret admin token >w<
-export CATTOMINT_ADMIN_TOKEN="your-secret-token"
+```bash
+export CATTOMINT_ADMIN_TOKEN="your-secret-token" on linux/mac/unix
+set CATTOMINT_ADMIN_TOKEN"your-secret-token" on windows
+```
 
 # start the server :3
 python app.py
