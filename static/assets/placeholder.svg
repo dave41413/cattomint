@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#b2ffe0" />
+      <stop offset="50%" stop-color="#d3f8ff" />
+      <stop offset="100%" stop-color="#ff9ed7" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#bg)" />
+  <rect x="16" y="16" width="608" height="328" rx="18" fill="#ffffff" opacity="0.6" />
+  <text x="50%" y="46%" text-anchor="middle" font-family="Tahoma, Verdana, sans-serif" font-size="32" fill="#1e2c5c">
+    cattomint upload
+  </text>
+  <text x="50%" y="58%" text-anchor="middle" font-family="Tahoma, Verdana, sans-serif" font-size="18" fill="#1e2c5c">
+    add your own cat media URL
+  </text>
+</svg>

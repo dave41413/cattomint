@@ -26,12 +26,22 @@ it's all about the cats owo
 
 ---
 
-## how to use :3
+## quick start :3
 
-1. download cattomint and python... host server using python (```python -m http.server 8000```)
-2. watch videos or upload ur own >w<  
-3. love the cats
-4. repeat
+```bash
+# make a virtual env >w<
+python -m venv .venv
+# activate it :3
+source .venv/bin/activate
+# install required packages owo
+pip install -r requirements.txt
+```
+
+# set a secret admin token >w<
+export CATTOMINT_ADMIN_TOKEN="your-secret-token"
+
+# start the server :3
+python app.py
 
 ---
 
