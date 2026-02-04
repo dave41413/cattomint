@@ -111,8 +111,68 @@ button:active {
   background: var(--blue);
   color: var(--white);
   font-weight: 700;
-  padding: 4px 0;
+  padding: 6px 12px;
   border-bottom: 3px solid var(--navy);
+}
+
+.ticker-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ticker-toggle {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  background: linear-gradient(180deg, #ffffff 0%, #ffd0f0 100%);
+}
+
+.ticker-window {
+  overflow: hidden;
+  flex: 1;
+  border: 2px inset var(--navy);
+  background: #0f2c6f;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  gap: 32px;
+  padding: 4px 0;
+  animation: ticker-scroll 18s linear infinite;
+}
+
+.ticker-item {
+  white-space: nowrap;
+  padding: 0 12px;
+}
+
+.ticker-window:hover .ticker-track,
+.ticker-window:focus-within .ticker-track,
+.ticker-toggle:focus + .ticker-window .ticker-track,
+.ticker[data-state="paused"] .ticker-track {
+  animation-play-state: paused;
+}
+
+.ticker-toggle[aria-pressed="true"] {
+  background: linear-gradient(180deg, #ffe1f5 0%, #ffffff 100%);
+  border-style: inset;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+    transform: translateX(0);
+  }
 }
 
 .content {

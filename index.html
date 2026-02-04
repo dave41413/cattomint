@@ -26,12 +26,40 @@
         </div>
       </header>
 
-      <nav class="ticker">
-        <marquee behavior="scroll" direction="left">
-          ✨ Now featuring: Minty Mews Weekly ✨ | Download the Cattomint Toolbar! |
-          New uploads every hour (or whenever the cats wake up) | Join the fan club for
-          glittery badges!
-        </marquee>
+      <nav class="ticker" aria-label="Cattomint updates ticker" data-state="running">
+        <div class="ticker-row">
+          <button
+            class="ticker-toggle"
+            type="button"
+            aria-pressed="false"
+            aria-controls="ticker-track"
+          >
+            Pause
+          </button>
+          <div class="ticker-window">
+            <div
+              id="ticker-track"
+              class="ticker-track"
+              role="status"
+              aria-live="off"
+              aria-label="Scrolling updates are playing"
+            >
+              <span
+                class="ticker-item"
+              >✨ Now featuring: Minty Mews Weekly ✨ | Download the Cattomint Toolbar!
+                | New uploads every hour (or whenever the cats wake up) | Join the fan
+                club for glittery badges!</span
+              >
+              <span
+                class="ticker-item"
+                aria-hidden="true"
+              >✨ Now featuring: Minty Mews Weekly ✨ | Download the Cattomint Toolbar!
+                | New uploads every hour (or whenever the cats wake up) | Join the fan
+                club for glittery badges!</span
+              >
+            </div>
+          </div>
+        </div>
       </nav>
 
       <main class="content">
@@ -170,5 +198,24 @@
         </div>
       </footer>
     </div>
+    <script>
+      const ticker = document.querySelector(".ticker");
+      const toggle = document.querySelector(".ticker-toggle");
+      const track = document.querySelector(".ticker-track");
+
+      if (ticker && toggle && track) {
+        toggle.addEventListener("click", () => {
+          const isPaused = toggle.getAttribute("aria-pressed") === "true";
+          const nextPaused = !isPaused;
+          toggle.setAttribute("aria-pressed", String(nextPaused));
+          toggle.textContent = nextPaused ? "Resume" : "Pause";
+          ticker.dataset.state = nextPaused ? "paused" : "running";
+          track.setAttribute(
+            "aria-label",
+            nextPaused ? "Scrolling updates are paused" : "Scrolling updates are playing"
+          );
+        });
+      }
+    </script>
   </body>
 </html>
