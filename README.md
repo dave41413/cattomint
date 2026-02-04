@@ -28,7 +28,7 @@ it's all about the cats owo
 
 ## how to use :3
 
-1. go to cattomint :3  
+1. download cattomint and python... host server using python (```python -m http.server 8000```)
 2. watch videos or upload ur own >w<  
 3. love the cats
 4. repeat
