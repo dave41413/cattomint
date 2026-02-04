@@ -37,5 +37,4 @@ it's all about the cats owo
 
 ## note :3
 
-cattomint is for cat lovers only.... have fun!!!!
->w<
+cattomint is for cat lovers only.... have fun!!!! =^.^=
