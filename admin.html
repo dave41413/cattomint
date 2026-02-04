@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cattomint admin panel</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="top-bar">
+        <div class="logo-block">
+          <span class="logo">cattomint</span>
+          <span class="tagline">admin mintboard</span>
+        </div>
+        <div class="search-block">
+          <label class="search-label" for="admin-token">Admin token</label>
+          <div class="search-row">
+            <input id="admin-token" type="password" placeholder="enter token" />
+            <button type="button" id="save-token">Save</button>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a class="button-link" href="/">Back to cattomint</a>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="main-feed">
+          <div class="panel">
+            <h2>Add new cat upload</h2>
+            <form id="item-form" class="admin-form">
+              <label>
+                Title
+                <input name="title" type="text" required />
+              </label>
+              <label>
+                Description
+                <textarea name="description" rows="3" required></textarea>
+              </label>
+              <label>
+                Type
+                <select name="kind" required>
+                  <option value="video">Video</option>
+                  <option value="image">Image</option>
+                </select>
+              </label>
+              <label>
+                Duration (videos only)
+                <input name="duration" type="text" placeholder="3:33" />
+              </label>
+              <label>
+                Views
+                <input name="views" type="number" min="0" value="0" />
+              </label>
+              <label>
+                Category
+                <input name="category" type="text" required />
+              </label>
+              <label>
+                Thumbnail URL
+                <input name="thumbnail_url" type="url" required />
+              </label>
+              <label>
+                Media URL
+                <input name="media_url" type="url" required />
+              </label>
+              <label class="checkbox-row">
+                <input name="is_featured" type="checkbox" />
+                Make featured
+              </label>
+              <button type="submit">Add upload</button>
+            </form>
+            <p class="form-status" id="form-status"></p>
+          </div>
+
+          <div class="panel">
+            <h2>Uploads</h2>
+            <div id="admin-items" class="admin-items"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>Secure the admin token before you share this portal.</p>
+      </footer>
+    </div>
+    <script src="admin.js"></script>
+  </body>
+</html>

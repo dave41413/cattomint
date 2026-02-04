@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cattomint - Cat Video Portal</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="top-bar">
+        <div class="logo-block">
+          <span class="logo">cattomint</span>
+          <span class="tagline">the purr-fect video vault</span>
+        </div>
+        <div class="search-block">
+          <label class="search-label" for="search">Search the meow-archive</label>
+          <div class="search-row">
+            <input id="search" type="text" placeholder="type: cat jam" />
+            <button type="button">Go!</button>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <button type="button">Upload</button>
+          <button type="button">Sign In</button>
+        </div>
+      </header>
+
+      <nav class="ticker" aria-label="Cattomint updates ticker" data-state="running">
+        <div class="ticker-row">
+          <button
+            class="ticker-toggle"
+            type="button"
+            aria-pressed="false"
+            aria-controls="ticker-track"
+          >
+            Pause
+          </button>
+          <div class="ticker-window">
+            <div
+              id="ticker-track"
+              class="ticker-track"
+              role="status"
+              aria-live="off"
+              aria-label="Scrolling updates are playing"
+            >
+              <span
+                class="ticker-item"
+              >✨ Now featuring: Minty Mews Weekly ✨ | Download the Cattomint Toolbar!
+                | New uploads every hour (or whenever the cats wake up) | Join the fan
+                club for glittery badges!</span
+              >
+              <span
+                class="ticker-item"
+                aria-hidden="true"
+              >✨ Now featuring: Minty Mews Weekly ✨ | Download the Cattomint Toolbar!
+                | New uploads every hour (or whenever the cats wake up) | Join the fan
+                club for glittery badges!</span
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="content">
+        <aside class="sidebar">
+          <div class="panel">
+            <h2>Channels</h2>
+            <ul>
+              <li><a href="#">Couch Climbers</a></li>
+              <li><a href="#">Kitchen Critters</a></li>
+              <li><a href="#">Lo-fi Purrs</a></li>
+              <li><a href="#">Retro Pawcasts</a></li>
+              <li><a href="#">Midnight Zoomies</a></li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h2>Community</h2>
+            <ul>
+              <li><a href="#">Top Rated</a></li>
+              <li><a href="#">Most Shared</a></li>
+              <li><a href="#">Fan Pages</a></li>
+              <li><a href="#">Cat-tastic Forums</a></li>
+            </ul>
+          </div>
+          <div class="panel stats">
+            <h2>Live Stats</h2>
+            <p><strong>2,004</strong> cats online</p>
+            <p><strong>99,902</strong> videos uploaded</p>
+            <p><strong>8,765</strong> minty hearts sent</p>
+          </div>
+        </aside>
+
+        <section class="main-feed">
+          <div class="hero" id="featured-panel">
+            <div class="hero-video" id="featured-media">
+              <div class="media-placeholder">
+                <img src="assets/placeholder.svg" alt="Upload a featured cat video." />
+              </div>
+              <div class="hero-info">
+                <h1>Upload a featured cat masterpiece</h1>
+                <p>
+                  Add a featured video or image from the admin panel to spotlight
+                  your favorite feline moments.
+                </p>
+                <div class="hero-actions">
+                  <button type="button" disabled>Play Now</button>
+                  <button type="button" disabled>Add to Favorites</button>
+                </div>
+              </div>
+            </div>
+            <div class="hero-side">
+              <h3>Quick Picks</h3>
+              <ul id="quick-picks">
+                <li>✨ Add cat clips to see them here.</li>
+              </ul>
+            </div>
+          </div>
+
+          <section class="video-grid" id="video-grid">
+            <article class="video-card empty-state">
+              <div>
+                <h3>No uploads yet</h3>
+                <p>Head to the admin panel to add cat videos and images.</p>
+              </div>
+            </article>
+          </section>
+
+          <section class="fan-zone">
+            <div class="panel">
+              <h2>Fan Zone</h2>
+              <p>
+                Share your desktop wallpapers, glitter GIFs, and ringtone edits.
+                Cattomint fans keep it classic.
+              </p>
+              <button type="button">Join the Fan Club</button>
+            </div>
+            <div class="panel">
+              <h2>Cat Image Wall</h2>
+              <div class="image-wall" id="image-wall">
+                <div class="image-placeholder">Add images in admin.</div>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>© 2004-2007 cattomint media. Best viewed on a mint-green CRT.</p>
+        <div class="footer-links">
+          <a href="#">About</a>
+          <a href="#">Privacy</a>
+          <a href="#">Help</a>
+          <a href="#">Advertise</a>
+        </div>
+      </footer>
+    </div>
+    <script src="app.js"></script>
+    <script>
+      const ticker = document.querySelector(".ticker");
+      const toggle = document.querySelector(".ticker-toggle");
+      const track = document.querySelector(".ticker-track");
+
+      if (ticker && toggle && track) {
+        toggle.addEventListener("click", () => {
+          const isPaused = toggle.getAttribute("aria-pressed") === "true";
+          const nextPaused = !isPaused;
+          toggle.setAttribute("aria-pressed", String(nextPaused));
+          toggle.textContent = nextPaused ? "Resume" : "Pause";
+          ticker.dataset.state = nextPaused ? "paused" : "running";
+          track.setAttribute(
+            "aria-label",
+            nextPaused ? "Scrolling updates are paused" : "Scrolling updates are playing"
+          );
+        });
+      }
+    </script>
+  </body>
+</html>

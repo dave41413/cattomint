@@ -1,1 +1,30 @@
-# Youtube but cat :3
+# cattomint
+
+A retro-styled cat video + image portal with a lightweight backend, SQLite database, and an admin panel for managing uploads.
+
+## Quick start
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# optional: customize the admin token
+export CATTOMINT_ADMIN_TOKEN="your-secret-token"
+
+python app.py
+```
+
+Visit:
+- `http://localhost:8000/` for the public site.
+- `http://localhost:8000/admin` for the admin panel.
+
+## Admin panel notes
+
+- Set your admin token in the header input (saved in local storage).
+- Add video or image URLs that you host yourself.
+- Toggle the featured item with the "Make featured" button.
+
+## Data storage
+
+Uploads are stored in `cattomint.db` (SQLite) in the project root. Delete the file to reset the catalog.
