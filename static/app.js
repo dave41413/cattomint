@@ -36,21 +36,33 @@ const renderFeatured = (item) => {
 
   const info = document.createElement("div");
   info.className = "hero-info";
-  info.innerHTML = `
-    <h1>Featured: ${item.title}</h1>
-    <p>${item.description}</p>
-    <div class="hero-actions">
-      <button type="button">Play Now</button>
-      <button type="button">Add to Favorites</button>
-    </div>
-  `;
+  const title = document.createElement("h1");
+  title.textContent = `Featured: ${item.title}`;
+  const description = document.createElement("p");
+  description.textContent = item.description;
+  const actions = document.createElement("div");
+  actions.className = "hero-actions";
+  const playButton = document.createElement("button");
+  playButton.type = "button";
+  playButton.textContent = "Play Now";
+  const favButton = document.createElement("button");
+  favButton.type = "button";
+  favButton.textContent = "Add to Favorites";
+  actions.append(playButton, favButton);
+  info.append(title, description, actions);
 
   container.innerHTML = "";
   container.appendChild(media);
   container.appendChild(info);
 
   picks.innerHTML = "";
-  const picksItems = [item.category, "Fresh uploads", "Fan favorites", "Retro paw-some"];
+  const picksItems = [];
+  if (item.category && item.category.trim()) {
+    picksItems.push(item.category);
+  } else {
+    picksItems.push("Category spotlight");
+  }
+  picksItems.push("Fresh uploads", "Fan favorites", "Retro paw-some");
   picksItems.forEach((label) => {
     const li = document.createElement("li");
     li.textContent = `🎬 ${label}`;
@@ -88,13 +100,18 @@ const renderGrid = (items) => {
   videos.forEach((item) => {
     const card = document.createElement("article");
     card.className = "video-card";
-    card.innerHTML = `
-      <img src="${item.thumbnail_url || placeholderImage}" alt="${item.title}" />
-      <div>
-        <h3>${item.title}</h3>
-        <p>${item.duration ? `${item.duration} · ` : ""}${formatViews(item.views)}</p>
-      </div>
-    `;
+    const img = document.createElement("img");
+    img.src = item.thumbnail_url || placeholderImage;
+    img.alt = item.title;
+    const details = document.createElement("div");
+    const heading = document.createElement("h3");
+    heading.textContent = item.title;
+    const meta = document.createElement("p");
+    meta.textContent = `${item.duration ? `${item.duration} · ` : ""}${formatViews(
+      item.views
+    )}`;
+    details.append(heading, meta);
+    card.append(img, details);
     grid.appendChild(card);
   });
 
@@ -122,16 +139,26 @@ const renderGrid = (items) => {
 };
 
 const loadContent = async () => {
-  const [featuredResponse, itemsResponse] = await Promise.all([
-    fetch("/api/featured"),
-    fetch("/api/items"),
-  ]);
+  try {
+    const [featuredResponse, itemsResponse] = await Promise.all([
+      fetch("/api/featured"),
+      fetch("/api/items"),
+    ]);
 
-  const featured = await featuredResponse.json();
-  const items = await itemsResponse.json();
+    if (!featuredResponse.ok || !itemsResponse.ok) {
+      throw new Error("Failed to load cattomint data.");
+    }
 
-  renderFeatured(featured);
-  renderGrid(items);
+    const featured = await featuredResponse.json();
+    const items = await itemsResponse.json();
+
+    renderFeatured(featured);
+    renderGrid(items);
+  } catch (error) {
+    console.error(error);
+    renderFeatured(null);
+    renderGrid([]);
+  }
 };
 
 loadContent();

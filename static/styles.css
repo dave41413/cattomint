@@ -97,6 +97,14 @@ button {
   cursor: pointer;
 }
 
+.button-link:focus,
+.button-link:focus-visible,
+button:focus,
+button:focus-visible {
+  outline: 3px solid #ffec7a;
+  outline-offset: 2px;
+}
+
 .button-link {
   padding: 6px 12px;
   font-weight: 700;
@@ -236,6 +244,13 @@ button:active {
 }
 
 .panel a:hover {
+  text-decoration: underline;
+}
+
+.panel a:focus,
+.panel a:focus-visible {
+  outline: 2px solid #ffec7a;
+  outline-offset: 3px;
   text-decoration: underline;
 }
 

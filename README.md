@@ -9,7 +9,7 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# optional: customize the admin token
+# required: set a secure admin token
 export CATTOMINT_ADMIN_TOKEN="your-secret-token"
 
 python app.py
@@ -28,3 +28,8 @@ Visit:
 ## Data storage
 
 Uploads are stored in `cattomint.db` (SQLite) in the project root. Delete the file to reset the catalog.
+
+## Hosting configuration
+
+- `CATTOMINT_HOST` (default `127.0.0.1`) controls the bind address.
+- `CATTOMINT_PORT` (default `8000`) controls the port.

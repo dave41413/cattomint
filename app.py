@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import os
+import secrets
 import sqlite3
+import sys
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from typing import Any, Dict, Iterable, List, Optional
@@ -10,9 +12,20 @@ from flask import Flask, jsonify, request, send_from_directory
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "cattomint.db")
-ADMIN_TOKEN = os.environ.get("CATTOMINT_ADMIN_TOKEN", "cattomint-admin")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+ADMIN_TOKEN = os.environ.get("CATTOMINT_ADMIN_TOKEN")
 
-app = Flask(__name__, static_folder=BASE_DIR, static_url_path="")
+if not ADMIN_TOKEN:
+    suggested = secrets.token_urlsafe(32)
+    print(
+        "Error: CATTOMINT_ADMIN_TOKEN is not set. Generate a strong token and "
+        "export it before starting the server.",
+        file=sys.stderr,
+    )
+    print(f"Example: export CATTOMINT_ADMIN_TOKEN='{suggested}'", file=sys.stderr)
+    sys.exit(1)
+
+app = Flask(__name__, static_folder="static", static_url_path="")
 
 
 @dataclass
@@ -56,9 +69,6 @@ def init_db() -> None:
             """
         )
         conn.commit()
-
-
-init_db()
 
 
 def row_to_item(row: sqlite3.Row) -> Item:
@@ -108,12 +118,12 @@ def require_admin() -> Optional[Dict[str, str]]:
 
 @app.route("/")
 def root() -> Any:
-    return send_from_directory(BASE_DIR, "index.html")
+    return send_from_directory(STATIC_DIR, "index.html")
 
 
 @app.route("/admin")
 def admin() -> Any:
-    return send_from_directory(BASE_DIR, "admin.html")
+    return send_from_directory(STATIC_DIR, "admin.html")
 
 
 @app.route("/api/items")
@@ -192,6 +202,10 @@ def api_admin_feature(item_id: int) -> Any:
         return jsonify(error), 401
 
     with get_connection() as conn:
+        exists = conn.execute("SELECT 1 FROM items WHERE id = ?", (item_id,)).fetchone()
+        if not exists:
+            return jsonify({"error": "Not found"}), 404
+
         conn.execute("UPDATE items SET is_featured = 0")
         conn.execute("UPDATE items SET is_featured = 1 WHERE id = ?", (item_id,))
         conn.commit()
@@ -201,9 +215,16 @@ def api_admin_feature(item_id: int) -> Any:
 
 @app.route("/assets/<path:filename>")
 def assets(filename: str) -> Any:
-    return send_from_directory(os.path.join(BASE_DIR, "assets"), filename)
+    return send_from_directory(os.path.join(STATIC_DIR, "assets"), filename)
 
 
 if __name__ == "__main__":
     init_db()
-    app.run(host="0.0.0.0", port=8000)
+    host = os.environ.get("CATTOMINT_HOST", "127.0.0.1")
+    port = int(os.environ.get("CATTOMINT_PORT", "8000"))
+    if host == "0.0.0.0":
+        print(
+            "Warning: Binding to 0.0.0.0 exposes cattomint on all interfaces.",
+            file=sys.stderr,
+        )
+    app.run(host=host, port=port)

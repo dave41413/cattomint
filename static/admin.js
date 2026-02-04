@@ -54,23 +54,24 @@ const renderItems = (items) => {
     return;
   }
 
-  itemsContainer.innerHTML = items
-    .map(
-      (item) => `
-        <div class="admin-item">
-          <div>
-            <strong>${item.title}</strong>
-            <p>${item.kind} · ${item.category} · ${item.views} views</p>
-          </div>
-          <button type="button" data-id="${item.id}" class="feature-btn">
-            ${item.is_featured ? "Featured" : "Make featured"}
-          </button>
-        </div>
-      `
-    )
-    .join("");
+  itemsContainer.innerHTML = "";
 
-  itemsContainer.querySelectorAll(".feature-btn").forEach((button) => {
+  items.forEach((item) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "admin-item";
+
+    const textBlock = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = item.title;
+    const meta = document.createElement("p");
+    meta.textContent = `${item.kind} · ${item.category} · ${item.views} views`;
+    textBlock.append(title, meta);
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "feature-btn";
+    button.dataset.id = item.id;
+    button.textContent = item.is_featured ? "Featured" : "Make featured";
     button.addEventListener("click", async () => {
       const id = button.dataset.id;
       const response = await fetch(`/api/admin/items/${id}/feature`, {
@@ -85,6 +86,9 @@ const renderItems = (items) => {
         setStatus("Unable to update featured item.", "error");
       }
     });
+
+    wrapper.append(textBlock, button);
+    itemsContainer.appendChild(wrapper);
   });
 };
 
